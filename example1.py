@@ -1,10 +1,14 @@
 """Decorators to add routes to a routing table"""
+from functools import wraps
+
+
 routing_table = []
 
 def routes(func):
     """Decorator that adds routes to routing table and return function"""
-    def wrapper(route):
-        route_entry = func(route)
+    @wraps(func)
+    def wrapper(*arg, **kwargs):
+        route_entry = func(*arg, **kwargs)
         routing_table.append(route_entry)
         print("Done")
         return route_entry
@@ -25,6 +29,6 @@ def add_bgp_route(route):
 if __name__ == "__main__":
     add_static_route("192.168.1.0 255.255.255.0 10.1.1.1")
     add_bgp_route("172.16.31.16 255.255.255.240 10.1.2.1")
-    print("\nCurrent routing table entries.")
+    print("\nCurrent routing table entries:")
     for route in routing_table: 
         print(route)
