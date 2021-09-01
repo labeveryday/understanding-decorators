@@ -6,6 +6,7 @@ def routes(func):
     def wrapper(route):
         route_entry = func(route)
         routing_table.append(route_entry)
+        print("Done")
         return route_entry
     return wrapper
 
